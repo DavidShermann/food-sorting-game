@@ -1,0 +1,342 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Heebo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+}
+
+/* ===== Game Container — content flows from top, no stretching ===== */
+#game-container {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ===== Header ===== */
+#game-header {
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  padding: 1.2vmin 3vmin;
+  text-align: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+#game-title {
+  color: white;
+  font-size: min(3.5vmin, 2.2rem);
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Content wrapper — shelf area + bottom items, no gap ===== */
+#game-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5vmin;
+  padding: 1.5vmin 2vmin 0;
+  direction: ltr;
+}
+
+/* ===== Side Columns ===== */
+.items-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vmin;
+  align-items: center;
+  min-width: 12vmin;
+}
+
+/* ===== Shelf + Bottom group ===== */
+#shelf-and-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ===== Shelf Wrapper ===== */
+#shelf-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+#shelf-image {
+  display: block;
+  width: min(60vmin, 62vh);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== Drop rows overlaid on shelf ===== */
+#shelf-drop-rows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8vmin 0;
+}
+
+.shelf-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0.5vmin 1vmin;
+  transition: background 0.2s;
+  border-radius: 0.5vmin;
+}
+
+.shelf-row.drop-hover {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.shelf-row.drop-wrong {
+  animation: shake 0.5s ease-in-out;
+}
+
+.shelf-items-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.8vmin;
+  flex-wrap: wrap;
+  min-height: 5vmin;
+}
+
+.shelf-items-area .sorted-item {
+  width: 8vmin;
+  height: 8vmin;
+  animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.shelf-items-area .sorted-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ===== Category Card — inside each shelf row ===== */
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3vmin;
+  padding: 0.5vmin 0.7vmin 0.7vmin;
+  background: rgba(255, 255, 255, 0.92);
+  border: 0.25vmin solid #e0e0e0;
+  border-radius: 1vmin;
+  width: 14vmin;
+  flex-shrink: 0;
+  text-align: center;
+  position: relative;
+}
+
+.category-card .category-preview {
+  width: 12vmin;
+  height: auto;
+  border-radius: 0.5vmin;
+  object-fit: contain;
+}
+
+.category-card .category-label {
+  font-size: min(1.5vmin, 0.9rem);
+  font-weight: 800;
+  color: #333;
+  direction: rtl;
+}
+
+.category-card .checkmark-icon {
+  width: 4vmin;
+  height: 4vmin;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  position: absolute;
+  top: -1.5vmin;
+  right: -1.5vmin;
+}
+
+.category-card .checkmark-icon.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== Bottom Items — pressed right under the shelf ===== */
+#items-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2vmin;
+  flex-wrap: nowrap;
+  padding: 0.3vmin 0 0.5vmin;
+  direction: ltr;
+  flex-shrink: 0;
+  /* Match the shelf's horizontal position by using same margins as game-area centering */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Draggable Items ===== */
+.drag-item {
+  width: 13vmin;
+  height: 13vmin;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: transform 0.2s;
+  z-index: 10;
+  position: relative;
+}
+
+.drag-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drag-item:hover {
+  transform: scale(1.08);
+}
+
+.drag-item.dragging {
+  cursor: grabbing;
+  z-index: 1000;
+  transform: scale(1.15) rotate(3deg);
+  opacity: 0.9;
+}
+
+.drag-item.snap-back {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.drag-item.sorted {
+  pointer-events: none;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+/* ===== Decorative Items (farmer) ===== */
+.decor-item {
+  width: 30vmin;
+  height: 30vmin;
+  user-select: none;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.decor-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ===== Game Complete Overlay ===== */
+#game-complete-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.5s ease;
+}
+
+#game-complete-overlay.hidden { display: none; }
+
+#game-complete-card {
+  background: white;
+  border-radius: 3vmin;
+  padding: 6vmin 8vmin;
+  text-align: center;
+  box-shadow: 0 2vmin 8vmin rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: slideUp 0.5s ease;
+  max-width: 90vw;
+}
+
+#success-title {
+  font-size: min(8vmin, 4.5rem);
+  color: #4CAF50;
+  margin-bottom: 2vmin;
+  text-shadow: 0.4vmin 0.4vmin 0.8vmin rgba(0, 0, 0, 0.15);
+  animation: successPulse 1.5s ease-in-out infinite;
+}
+
+#play-again-btn {
+  margin-top: 2vmin;
+  padding: 1.8vmin 5vmin;
+  font-size: min(2vmin, 1.2rem);
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  border: none;
+  border-radius: 1.5vmin;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0.5vmin 1.5vmin rgba(76, 175, 80, 0.4);
+  font-family: 'Heebo', sans-serif;
+}
+
+#play-again-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Confetti ===== */
+#confetti-container {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 1.2vmin; height: 1.2vmin;
+  border-radius: 0.3vmin;
+  top: -1.5vmin;
+  animation: confettiFall 3s ease-in forwards;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(5vmin); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-1vmin); }
+  30% { transform: translateX(1vmin); }
+  45% { transform: translateX(-0.8vmin); }
+  60% { transform: translateX(0.8vmin); }
+  75% { transform: translateX(-0.4vmin); }
+  90% { transform: translateX(0.4vmin); }
+}
+@keyframes successPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(60vmin) rotate(720deg); opacity: 0; }
+}
+@keyframes popIn { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }

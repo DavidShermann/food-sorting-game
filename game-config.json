@@ -1,0 +1,44 @@
+{
+  "gameTitle": "עזרו לחקלאי למיין את המאכלים לקבוצות השונות",
+  "shelf": {
+    "image": "assets/shelf/shelf.png"
+  },
+  "categories": [
+    {
+      "id": "fruits-veggies",
+      "name": "פירות וירקות",
+      "categoryImage": "assets/categories/fruits-veggies.png",
+      "items": [
+        { "id": "tomato", "name": "עגבנייה", "image": "assets/items/tomato.png" },
+        { "id": "banana", "name": "בננה", "image": "assets/items/banana.png" },
+        { "id": "carrot", "name": "גזר", "image": "assets/items/carrot.png" },
+        { "id": "apple", "name": "תפוח", "image": "assets/items/apple.png" }
+      ]
+    },
+    {
+      "id": "dairy",
+      "name": "מוצרי חלב",
+      "categoryImage": "assets/categories/dairy.png",
+      "items": [
+        { "id": "butter", "name": "חמאה", "image": "assets/items/butter.png" },
+        { "id": "cheese", "name": "גבינה", "image": "assets/items/cheese.png" },
+        { "id": "milk", "name": "חלב", "image": "assets/items/milk.png" },
+        { "id": "cream", "name": "שמנת", "image": "assets/items/cream.png" }
+      ]
+    },
+    {
+      "id": "bakery",
+      "name": "מאפים",
+      "categoryImage": "assets/categories/bakery.png",
+      "items": [
+        { "id": "bread", "name": "לחם", "image": "assets/items/bread.png" },
+        { "id": "croissant", "name": "קרואסון", "image": "assets/items/croissant.png" },
+        { "id": "cookie", "name": "עוגייה", "image": "assets/items/cookie.png" },
+        { "id": "cinnamonroll", "name": "שושנת קינמון", "image": "assets/items/cinnamonroll.png" }
+      ]
+    }
+  ],
+  "extraItems": [
+    { "id": "farmer", "name": "חקלאי", "image": "assets/items/farmer.png", "category": "none" }
+  ]
+}

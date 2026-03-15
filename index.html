@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מיון מאכלים לקטגוריות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="game-container">
+    <header id="game-header">
+      <h1 id="game-title">מיין את הפריטים!</h1>
+    </header>
+
+    <div id="game-area">
+      <!-- Items on the left side -->
+      <div id="items-left" class="items-column"></div>
+
+      <!-- Shelf + bottom items grouped together -->
+      <div id="shelf-and-bottom">
+        <div id="shelf-wrapper">
+          <img id="shelf-image" src="assets/shelf/shelf.png" alt="shelf" draggable="false">
+          <div id="shelf-drop-rows">
+            <!-- Rows with category cards injected by JS -->
+          </div>
+        </div>
+        <!-- Items at the bottom, centered under the shelf -->
+        <div id="items-bottom"></div>
+      </div>
+
+      <!-- Items on the right side -->
+      <div id="items-right" class="items-column"></div>
+    </div>
+
+    <!-- Game Complete Overlay -->
+    <div id="game-complete-overlay" class="hidden">
+      <div id="game-complete-card">
+        <div id="confetti-container"></div>
+        <h2 id="success-title">הצלחת!</h2>
+        <button id="play-again-btn">שחק שוב</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/drag-drop.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
