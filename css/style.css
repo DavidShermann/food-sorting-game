@@ -8,6 +8,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -340,3 +341,248 @@ body {
   100% { transform: translateY(60vmin) rotate(720deg); opacity: 0; }
 }
 @keyframes popIn { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* ==========================================================
+   TABLET PORTRAIT (width < 1024px)
+   Shelf + categories stay, side items move under shelf
+   ========================================================== */
+@media (max-width: 1024px) and (orientation: portrait) {
+  html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #game-container {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  #game-area {
+    flex-wrap: wrap;
+    padding: 1.5vmin 1vmin 0;
+    gap: 1vmin;
+  }
+
+  /* Hide the farmer on small portrait screens — too crowded */
+  .decor-item {
+    width: 20vmin;
+    height: 20vmin;
+    order: -1;
+  }
+
+  .items-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: unset;
+    order: 3;
+    gap: 1vmin;
+  }
+
+  #shelf-and-bottom {
+    order: 1;
+  }
+
+  #shelf-image {
+    width: min(75vw, 55vh);
+  }
+
+  .drag-item {
+    width: 12vmin;
+    height: 12vmin;
+  }
+
+  .category-card {
+    width: 13vmin;
+  }
+
+  .category-card .category-preview {
+    width: 11vmin;
+  }
+
+  .category-card .category-label {
+    font-size: min(1.3vmin, 0.75rem);
+  }
+
+  #items-bottom {
+    flex-wrap: wrap;
+    gap: 1.5vmin;
+  }
+}
+
+/* ==========================================================
+   MOBILE PORTRAIT (width < 768px)
+   Everything stacks vertically — shelf on top, items below
+   ========================================================== */
+@media (max-width: 768px) and (orientation: portrait) {
+  #game-area {
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    padding: 1vw;
+  }
+
+  /* Farmer below items */
+  .decor-item {
+    width: 20vw;
+    height: 20vw;
+    order: 10;
+  }
+
+  /* Side columns become horizontal rows */
+  .items-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: unset;
+    order: 5;
+    gap: 2vw;
+  }
+
+  #shelf-and-bottom {
+    order: 1;
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Shelf fills most of the width */
+  #shelf-image {
+    width: 85vw;
+  }
+
+  .drag-item {
+    width: 13vw;
+    height: 13vw;
+  }
+
+  .category-card {
+    width: 18vw;
+  }
+
+  .category-card .category-preview {
+    width: 16vw;
+  }
+
+  .category-card .category-label {
+    font-size: min(2.5vw, 0.8rem);
+  }
+
+  .shelf-items-area .sorted-item {
+    width: 10vw;
+    height: 10vw;
+  }
+
+  #items-bottom {
+    flex-wrap: wrap;
+    gap: 2vw;
+  }
+
+  #game-title {
+    font-size: min(4vw, 1.3rem);
+  }
+
+  #game-header {
+    padding: 2vw 3vw;
+  }
+
+  #game-complete-card {
+    padding: 5vw 6vw;
+  }
+
+  #success-title {
+    font-size: min(10vw, 3rem);
+  }
+
+  #play-again-btn {
+    padding: 2vw 6vw;
+    font-size: min(3.5vw, 1.1rem);
+  }
+}
+
+/* ==========================================================
+   SMALL PHONE (width < 480px)
+   ========================================================== */
+@media (max-width: 480px) {
+  .decor-item {
+    width: 22vw;
+    height: 22vw;
+  }
+
+  .drag-item {
+    width: 16vw;
+    height: 16vw;
+  }
+
+  #shelf-image {
+    width: 90vw;
+  }
+
+  .category-card {
+    width: 18vw;
+  }
+
+  .category-card .category-preview {
+    width: 16vw;
+  }
+
+  .category-card .category-label {
+    font-size: 2.5vw;
+  }
+}
+
+/* ==========================================================
+   LANDSCAPE MOBILE/TABLET
+   Keep horizontal layout but shrink everything
+   ========================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  #game-header {
+    padding: 0.5vmin 2vmin;
+  }
+
+  #game-title {
+    font-size: min(2.5vmin, 1rem);
+  }
+
+  #game-area {
+    padding: 0.5vmin 1vmin 0;
+    gap: 0.8vmin;
+  }
+
+  .drag-item {
+    width: 10vmin;
+    height: 10vmin;
+  }
+
+  .decor-item {
+    width: 22vmin;
+    height: 22vmin;
+  }
+
+  #shelf-image {
+    width: min(50vmin, 55vh);
+  }
+
+  .category-card {
+    width: 11vmin;
+  }
+
+  .category-card .category-preview {
+    width: 9vmin;
+  }
+
+  .category-card .category-label {
+    font-size: 1.2vmin;
+  }
+
+  #items-bottom {
+    gap: 0.8vmin;
+    padding: 0.2vmin 0 0.3vmin;
+  }
+
+  .shelf-items-area .sorted-item {
+    width: 6vmin;
+    height: 6vmin;
+  }
+}
